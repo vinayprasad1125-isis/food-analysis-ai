@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #FCFCFC;
+    --primary: #10B981;
+    --accent: #84CC16;
+    --secondary: #38BDF8;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--bg, #FCFCFC);
+    color: #0F172A;
+    overflow-x: hidden;
+  }
+}
+
+/* Glassmorphism & Custom Card styles */
+@layer components {
+  .card-glass {
+    @apply bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-2xl shadow-sm transition-all duration-300;
+  }
+
+  .card-glass-hover {
+    @apply hover:shadow-md hover:border-emerald-500/20 hover:-translate-y-1;
+  }
+}
+
+/* Subtle background keyframe animations */
+@keyframes background-pan {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.background-animate {
+  background-size: 200% 200%;
+  animation: background-pan 6s ease infinite;
+}
+
+/* Custom Scrollbar for sleek UI */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8FAFC;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}

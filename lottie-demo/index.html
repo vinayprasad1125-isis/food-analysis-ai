@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lottie Demo</title>
+  <style>
+    body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; display:flex; flex-direction:column; align-items:center; gap:16px; padding:24px; }
+    #anim { width: 400px; height: 400px; }
+    .controls { display:flex; gap:8px; }
+  </style>
+</head>
+<body>
+  <h1>Lottie Demo</h1>
+  <div id="anim"></div>
+  <div class="controls">
+    <button id="play">Play</button>
+    <button id="pause">Pause</button>
+    <button id="stop">Stop</button>
+  </div>
+
+  <!-- Lottie player (CDN) -->
+  <script src="https://unpkg.com/lottie-web@5.10.1/build/player/lottie.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

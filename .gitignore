@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+venv/
+.env
+
+# Build outputs
+.next/
+dist/
+build/
+.npm-cache/
+
+# Databases & caches
+chroma_db_storage/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# OS files
+.DS_Store
+Thumbs.db
