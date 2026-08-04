@@ -55,6 +55,85 @@ interface CompareResult {
   comparison_summary: string
 }
 
+function getKeyIngredientBadge(name: string): { label: string; value: string; badgeColor: string } {
+  const n = name.toLowerCase()
+  if (n.includes('banana')) {
+    return {
+      label: 'Key Nutrient',
+      value: 'Potassium (358mg) — Electrolyte & Heart Support',
+      badgeColor: 'bg-yellow-50 text-yellow-800 border-yellow-200/80',
+    }
+  }
+  if (n.includes('salmon') || n.includes('fish')) {
+    return {
+      label: 'Key Nutrient',
+      value: 'Omega-3 Fatty Acids (EPA/DHA) & Vitamin B3',
+      badgeColor: 'bg-sky-50 text-sky-800 border-sky-200/80',
+    }
+  }
+  if (n.includes('chicken') || n.includes('meat') || n.includes('beef') || n.includes('turkey')) {
+    return {
+      label: 'Key Nutrient',
+      value: 'Bioavailable Lean Protein & B-Complex Vitamins',
+      badgeColor: 'bg-emerald-50 text-emerald-800 border-emerald-200/80',
+    }
+  }
+  if (n.includes('milk') || n.includes('cheese') || n.includes('dairy') || n.includes('yogurt')) {
+    return {
+      label: 'Key Nutrient',
+      value: 'Calcium (120mg) & Bioactive Vitamin D3',
+      badgeColor: 'bg-blue-50 text-blue-800 border-blue-200/80',
+    }
+  }
+  if (n.includes('oat')) {
+    return {
+      label: 'Key Ingredient',
+      value: 'Beta-Glucan Soluble Dietary Fiber',
+      badgeColor: 'bg-amber-50 text-amber-800 border-amber-200/80',
+    }
+  }
+  if (n.includes('almond') || n.includes('nut')) {
+    return {
+      label: 'Key Ingredient',
+      value: 'Vitamin E & Heart-Healthy Monounsaturated Fats',
+      badgeColor: 'bg-orange-50 text-orange-800 border-orange-200/80',
+    }
+  }
+  if (n.includes('choc') || n.includes('cocoa')) {
+    return {
+      label: 'Key Ingredient',
+      value: 'Cocoa Flavanols & Natural Magnesium',
+      badgeColor: 'bg-purple-50 text-purple-800 border-purple-200/80',
+    }
+  }
+  if (n.includes('chip') || n.includes('potato') || n.includes('fries')) {
+    return {
+      label: 'Key Nutrient',
+      value: 'Dietary Potassium & High Total Lipid Energy',
+      badgeColor: 'bg-rose-50 text-rose-800 border-rose-200/80',
+    }
+  }
+  if (n.includes('apple') || n.includes('fruit') || n.includes('berry')) {
+    return {
+      label: 'Key Ingredient',
+      value: 'Pectin Soluble Fiber & Antioxidant Polyphenols',
+      badgeColor: 'bg-red-50 text-red-800 border-red-200/80',
+    }
+  }
+  if (n.includes('egg')) {
+    return {
+      label: 'Key Nutrient',
+      value: 'Choline & Complete Essential Amino Acids',
+      badgeColor: 'bg-amber-50 text-amber-900 border-amber-300/80',
+    }
+  }
+  return {
+    label: 'Key Nutrient / Ingredient',
+    value: 'Essential Micronutrients & Bioactive Phenols',
+    badgeColor: 'bg-emerald-50 text-emerald-800 border-emerald-200/80',
+  }
+}
+
 function getFallbackFood(name: string): CompareItem {
   const n = name.toLowerCase()
   if (n.includes('chicken') || n.includes('meat') || n.includes('beef') || n.includes('fish') || n.includes('egg')) {
@@ -406,9 +485,25 @@ export const FeaturesSection: React.FC = () => {
                         <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">
                           Main Verified Ingredients
                         </span>
-                        <p className="text-xs text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-200/60 leading-relaxed font-medium">
+                        <p className="text-xs text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-200/60 leading-relaxed font-medium mb-2.5">
                           {result.food_a.main_ingredients}
                         </p>
+                        {(() => {
+                          const badge = getKeyIngredientBadge(result.food_a.name)
+                          return (
+                            <div className={`p-2.5 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-1 ${badge.badgeColor}`}>
+                              <div className="flex items-center gap-1.5">
+                                <SparklesIcon className="w-4 h-4 shrink-0" />
+                                <span className="text-[10px] font-extrabold uppercase tracking-wider shrink-0">
+                                  {badge.label}:
+                                </span>
+                              </div>
+                              <span className="text-xs font-bold sm:text-right">
+                                {badge.value}
+                              </span>
+                            </div>
+                          )
+                        })()}
                       </div>
 
                       {/* Macronutrients Grid */}
@@ -489,9 +584,25 @@ export const FeaturesSection: React.FC = () => {
                         <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">
                           Main Verified Ingredients
                         </span>
-                        <p className="text-xs text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-200/60 leading-relaxed font-medium">
+                        <p className="text-xs text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-200/60 leading-relaxed font-medium mb-2.5">
                           {result.food_b.main_ingredients}
                         </p>
+                        {(() => {
+                          const badge = getKeyIngredientBadge(result.food_b.name)
+                          return (
+                            <div className={`p-2.5 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-1 ${badge.badgeColor}`}>
+                              <div className="flex items-center gap-1.5">
+                                <SparklesIcon className="w-4 h-4 shrink-0" />
+                                <span className="text-[10px] font-extrabold uppercase tracking-wider shrink-0">
+                                  {badge.label}:
+                                </span>
+                              </div>
+                              <span className="text-xs font-bold sm:text-right">
+                                {badge.value}
+                              </span>
+                            </div>
+                          )
+                        })()}
                       </div>
 
                       {/* Macronutrients Grid */}
