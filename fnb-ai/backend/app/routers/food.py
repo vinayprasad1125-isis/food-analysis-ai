@@ -56,6 +56,54 @@ def _get_default_compare_item(name: str) -> FoodCompareItem:
             sodium=525.0,
             source_of_production="Tuber Crop Agriculture — Sliced potatoes fried in vegetable oils."
         )
+    if "banana" in lower:
+        return FoodCompareItem(
+            name=name.title(),
+            main_ingredients="100% Raw Banana Fruit, Natural Potassium, Dietary Fiber",
+            calories=89.0,
+            protein=1.1,
+            fat=0.3,
+            carbs=22.8,
+            sugar=12.2,
+            sodium=1.0,
+            source_of_production="Tropical Herbaceous Agriculture — Cultivated banana fruit bunches."
+        )
+    if "chicken" in lower or "meat" in lower or "beef" in lower:
+        return FoodCompareItem(
+            name=name.title(),
+            main_ingredients="100% Pure Animal Muscle/Protein Tissue (Unprocessed), Natural Trace Minerals",
+            calories=165.0,
+            protein=31.0,
+            fat=3.6,
+            carbs=0.0,
+            sugar=0.0,
+            sodium=74.0,
+            source_of_production="Pasture/Livestock Farming — Ethically raised animal agriculture."
+        )
+    if "salmon" in lower or "fish" in lower:
+        return FoodCompareItem(
+            name=name.title(),
+            main_ingredients="100% Wild Atlantic Salmon Fillet, Rich in Omega-3 Fatty Acids (EPA/DHA)",
+            calories=208.0,
+            protein=20.0,
+            fat=13.0,
+            carbs=0.0,
+            sugar=0.0,
+            sodium=59.0,
+            source_of_production="Marine Fishery & Aquaculture — Wild-caught and sustainable seafood."
+        )
+    if "choc" in lower:
+        return FoodCompareItem(
+            name=name.title(),
+            main_ingredients="Cocoa Solids, Cocoa Butter, Sugar, Natural Vanilla, Soy Lecithin",
+            calories=598.0,
+            protein=7.8,
+            fat=43.0,
+            carbs=46.0,
+            sugar=24.0,
+            sodium=20.0,
+            source_of_production="Cacao Agroforestry — Fermented and roasted cacao beans."
+        )
     return FoodCompareItem(
         name=name.title(),
         main_ingredients=f"Whole-food ingredients and natural components of {name}",
