@@ -55,6 +55,73 @@ interface CompareResult {
   comparison_summary: string
 }
 
+function getFallbackFood(name: string): CompareItem {
+  const n = name.toLowerCase()
+  if (n.includes('chicken') || n.includes('meat') || n.includes('beef') || n.includes('fish') || n.includes('egg')) {
+    return {
+      name,
+      main_ingredients: '100% Pure Animal Muscle/Protein Tissue (Unprocessed), Natural Trace Minerals',
+      calories: 165,
+      protein: 31.0,
+      fat: 3.6,
+      carbs: 0.0,
+      sugar: 0.0,
+      sodium: 74.0,
+      source_of_production: 'Poultry / Livestock Farming — Pasture-raised or farm-harvested natural meat/protein',
+    }
+  }
+  if (n.includes('oat') || n.includes('almond') || n.includes('soy') || n.includes('rice milk')) {
+    return {
+      name,
+      main_ingredients: 'Plant Base (Water, Milled Grains/Nuts), Rapeseed Oil, Dipotassium Phosphate, Calcium Carbonate',
+      calories: 48,
+      protein: 1.2,
+      fat: 1.5,
+      carbs: 7.0,
+      sugar: 4.0,
+      sodium: 40.0,
+      source_of_production: 'Grain/Nut Agriculture — Milled plant kernels emulsified with vegetable oils',
+    }
+  }
+  if (n.includes('milk') || n.includes('cheese') || n.includes('dairy') || n.includes('yogurt')) {
+    return {
+      name,
+      main_ingredients: 'Whole Bovine Milk, Natural Enzymes, Vitamin D3',
+      calories: 61,
+      protein: 3.2,
+      fat: 3.3,
+      carbs: 4.8,
+      sugar: 5.0,
+      sodium: 43.0,
+      source_of_production: 'Dairy Cattle (Bos taurus) — Farm-harvested mammalian dairy',
+    }
+  }
+  if (n.includes('choc') || n.includes('sugar') || n.includes('candy') || n.includes('cookie') || n.includes('chip')) {
+    return {
+      name,
+      main_ingredients: 'Sugar, Cocoa Solids / Vegetable Oils, Corn Syrup, Emulsifiers (Soy Lecithin)',
+      calories: 530,
+      protein: 5.0,
+      fat: 30.0,
+      carbs: 60.0,
+      sugar: 45.0,
+      sodium: 150.0,
+      source_of_production: 'Confectionery Processing — Refined sugar and cocoa/vegetable fat blend',
+    }
+  }
+  return {
+    name,
+    main_ingredients: `${name}, Natural Dietary Fiber, Essential Trace Minerals`,
+    calories: 120,
+    protein: 4.5,
+    fat: 2.0,
+    carbs: 22.0,
+    sugar: 6.0,
+    sodium: 45.0,
+    source_of_production: 'Agricultural Farm Production — Fresh farm-harvested crop or ingredient',
+  }
+}
+
 export const FeaturesSection: React.FC = () => {
   const [compareOpen, setCompareOpen] = useState(false)
   const [foodA, setFoodA] = useState('Whole Milk')
@@ -79,64 +146,27 @@ export const FeaturesSection: React.FC = () => {
         const data = await res.json()
         setResult(data)
       } else {
-        // Fallback demo comparison
+        const fa = getFallbackFood(foodA)
+        const fb = getFallbackFood(foodB)
         setResult({
-          food_a: {
-            name: foodA,
-            main_ingredients: 'Whole Bovine Milk, Vitamin D3',
-            calories: 61,
-            protein: 3.2,
-            fat: 3.3,
-            carbs: 4.8,
-            sugar: 5.0,
-            sodium: 43.0,
-            source_of_production: 'Dairy Cattle (Bos taurus) — Farm-harvested mammalian milk',
-          },
-          food_b: {
-            name: foodB,
-            main_ingredients: 'Oat Base (Water, Oats), Rapeseed Oil, Dipotassium Phosphate',
-            calories: 48,
-            protein: 1.0,
-            fat: 1.5,
-            carbs: 7.0,
-            sugar: 4.0,
-            sodium: 40.0,
-            source_of_production: 'Grain Agriculture — Milled oat kernels emulsified with plant oils',
-          },
-          winner: 'A',
-          winner_name: foodA,
-          verdict: `${foodA} is clinically superior due to its higher bioavailable protein content and zero synthetic emulsifiers.`,
-          comparison_summary: `Side-by-side evaluation shows that **${foodA}** delivers better amino acid density, while **${foodB}** contains added plant oils.`,
+          food_a: fa,
+          food_b: fb,
+          winner: fa.protein >= fb.protein ? 'A' : 'B',
+          winner_name: fa.protein >= fb.protein ? foodA : foodB,
+          verdict: `${fa.protein >= fb.protein ? foodA : foodB} is clinically superior due to its higher bioavailable protein content and cleaner macronutrient profile.`,
+          comparison_summary: `Side-by-side evaluation shows that **${fa.name}** provides ${fa.protein}g protein per 100g compared to ${fb.protein}g in **${fb.name}**.`,
         })
       }
     } catch (err) {
+      const fa = getFallbackFood(foodA)
+      const fb = getFallbackFood(foodB)
       setResult({
-        food_a: {
-          name: foodA,
-          main_ingredients: 'Whole Bovine Milk, Vitamin D3',
-          calories: 61,
-          protein: 3.2,
-          fat: 3.3,
-          carbs: 4.8,
-          sugar: 5.0,
-          sodium: 43.0,
-          source_of_production: 'Dairy Cattle (Bos taurus) — Farm-harvested mammalian milk',
-        },
-        food_b: {
-          name: foodB,
-          main_ingredients: 'Oat Base (Water, Oats), Rapeseed Oil, Dipotassium Phosphate',
-          calories: 48,
-          protein: 1.0,
-          fat: 1.5,
-          carbs: 7.0,
-          sugar: 4.0,
-          sodium: 40.0,
-          source_of_production: 'Grain Agriculture — Milled oat kernels emulsified with plant oils',
-        },
-        winner: 'A',
-        winner_name: foodA,
-        verdict: `${foodA} is clinically superior due to its higher bioavailable protein content and zero synthetic emulsifiers.`,
-        comparison_summary: `Side-by-side evaluation shows that ${foodA} delivers better amino acid density, while ${foodB} contains added plant oils.`,
+        food_a: fa,
+        food_b: fb,
+        winner: fa.protein >= fb.protein ? 'A' : 'B',
+        winner_name: fa.protein >= fb.protein ? foodA : foodB,
+        verdict: `${fa.protein >= fb.protein ? foodA : foodB} is clinically superior due to its higher bioavailable protein content and cleaner macronutrient profile.`,
+        comparison_summary: `Side-by-side evaluation shows that **${fa.name}** provides ${fa.protein}g protein per 100g compared to ${fb.protein}g in **${fb.name}**.`,
       })
     } finally {
       setLoading(false)
